@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    #favDialog{
+        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        border: none;
+        background-color: transparent;
+        position: absolute;
+        left: 0;
+        top: 0;
+        padding: 0;
+        margin: auto;
+
+        user-select: text;
+        visibility: visible;
+        inset-block-start: 0;
+        inset-block-end: 0;
+    }
+    #favDialog::backdrop{
+        display: none;
+    }
+    #favDialog::before{
+        content: "";
+        display: block;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: #000000aa;
+    }
+
+    #favDialog,
+    #favDialog::before{
+        animation: fadeout 500ms ease forwards;
+    }
+
+    #favDialog[open],
+    #favDialog[open]::before{
+        animation: fadein 500ms ease forwards;
+    }
+
+    #favDialog form{
+        display: block;
+        padding: 40px 0 30px 0;
+        position: relative;
+    }
+    #favDialog .btns{
+        text-align: center;
+    }
+
+    #favDialog .btn-close{
+        position: absolute;
+        top: -35px;
+        right: 0;
+        width: 30px;
+        height: 30px;
+        border: none;
+        background-color: transparent;
+        padding: 0;
+    }
+    #favDialog .btn-close:before{
+        content: "";
+        display: block;
+        width: 30px;
+        height: 2px;
+        background-color: #ffffff;
+        transform: rotate(-45deg);
+        transform-origin: 50% 50%;
+    }
+    #favDialog .btn-close:after{
+        content: "";
+        display: block;
+        width: 30px;
+        height: 2px;
+        background-color: #ffffff;
+        transform: translate(0,-2px) rotate(45deg);
+        transform-origin: 50% 50%;
+    }
+
+    #favDialog .content-wrap{
+        background-color: #ffffff;
+        width: 500px;
+        margin: 0 auto;
+        padding: 2rem;
+        border-radius: 10px;
+        border: 1px solid #000000;
+        position: relative;
+        z-index: 2;
+    }
+
+    @keyframes fadein{
+        0%{
+            opacity: 0;
+        }
+        100%{
+            opacity: 1;
+        }
+    }
+    @keyframes fadeout{
+        0%{
+            opacity: 1;
+            display: block;
+        }
+        99%{
+            opacity: 0;
+            display: block;
+        }
+        100%{
+            opacity: 0;
+            display: none;
+        }
+    }
+
+  </style>
+  <script>
+    window.addEventListener('load',()=>{
+      const showButtons = document.querySelectorAll(".showDialog");
+      const favDialog = document.getElementById("favDialog");
+
+      // "Show the dialog" ボタンで <dialog> をモーダルに開く
+      showButtons.forEach((item)=>{
+        item.addEventListener("click", (e) => {
+          let id = e.target.getAttribute('data-id');
+          const content = document.querySelector(`#${id}`).content;
+          const clone = document.importNode(content, true);
+          let $wrap = document.querySelector('#favDialog .content-main');
+          for (const child of $wrap.children) {
+            $wrap.removeChild(child);
+          }
+          $wrap.appendChild(clone);
+
+          favDialog.showModal();
+        });
+      });
+
+      document.querySelector('#favDialog').addEventListener('click',(e)=>{
+        if(e.target === e.currentTarget || e.target.tagName.toLowerCase() === 'form'){
+          console.log(e.target , e.currentTarget);
+          favDialog.close();
+        }
+      },false);
+
+    },false);
+  </script>
+</head>
+<body>
+<div>
+  <button class="showDialog" data-id="template1">template1</button>
+</div>
+<div>
+  <button class="showDialog" data-id="template2">template2</button>
+</div>
+<div>
+  <button class="showDialog" data-id="template3">template3</button>
+</div>
+
+
+<!-- フォームを含むモーダルダイアログ -->
+<dialog id="favDialog">
+  <form>
+    <div class="content-wrap">
+      <button value="cancel" formmethod="dialog" class="btn-close"></button>
+      <div class="content-main"></div>
+      <div class="btns">
+        <button value="cancel" formmethod="dialog">Close</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<template id="template1">
+  <div>
+    template1
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  </div>
+</template>
+<template id="template2">
+  <div>
+    template2
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  </div>
+</template>
+<template id="template3">
+  <div>
+    template3
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  </div>
+</template>
+
+</body>
+</html>
